@@ -1,8 +1,9 @@
 {
   "name": "invite",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "http://clueride.com",
+  "description": "Invite - Clue Ride Invitation Editor",
+  "homepage": "http://www.clueride.com/",
   "private": true,
   "config": {
     "ionic_webpack": "config/webpack.config.js",
@@ -24,6 +25,7 @@
     "@angular/http": "5.0.0",
     "@angular/platform-browser": "5.0.0",
     "@angular/platform-browser-dynamic": "5.0.0",
+    "@auth0/cordova": "^0.3.0",
     "@ionic-native/core": "4.3.2",
     "@ionic-native/splash-screen": "4.3.2",
     "@ionic-native/status-bar": "4.3.2",
@@ -31,6 +33,7 @@
     "awesome-typescript-loader": "^3.4.1",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
+    "ng-event-source": "^1.0.14",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
@@ -38,6 +41,5 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.1.0",
     "typescript": "2.4.2"
-  },
-  "description": "An Ionic project"
+  }
 }
