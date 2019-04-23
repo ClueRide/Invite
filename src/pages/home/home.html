@@ -3,29 +3,37 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Recent Teams</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <ion-card>
-    <ion-card-title>Recent Teams</ion-card-title>
-    <ion-card-content *ngIf="teams && teams.length > 0">
+    <div *ngIf="teams && teams.length > 0">
       <ion-list>
-        <button ion-item *ngFor="let team of teams" (click)="itemTapped($event, team)">
-          <ion-item>
-            {{team.name}}
-          </ion-item>
-        </button>
+
+          <button ion-item
+                  *ngFor="let team of teams"
+                  (click)="toggleExpansion(team)">
+              {{team.name}} has {{team.members.length}} members
+            <expanded-team [expanded]="team.expanded"
+                           [expandHeight]="46 * team.members.length">
+              <ion-list>
+                <button ion-item *ngFor="let member of team.members">
+                  {{member.displayName}}
+                </button>
+              </ion-list>
+            </expanded-team>
+          </button>
+
       </ion-list>
 
-      <button ion-button (click)="addTeam()">
-        Add New
-      </button>
+    </div>
 
-    </ion-card-content>
-  </ion-card>
+  <button ion-button (click)="addTeam()">
+    Add New
+  </button>
+
 
   <ion-card>
     <ion-card-title>Upcoming Outings</ion-card-title>

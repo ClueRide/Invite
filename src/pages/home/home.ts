@@ -1,5 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {OutingService, OutingView, Team, TeamService} from 'front-end-common';
+import {from} from "rxjs/observable/from";
+
+export class TeamView extends Team {
+
+  expanded: boolean;
+
+  constructor(team: Team) {
+    super();
+    this.expanded = false;
+    this.id = team.id;
+    this.members = team.members;
+    this.name = team.name;
+  }
+
+}
 
 @Component({
   selector: 'page-home',
@@ -9,14 +24,13 @@ export class HomePage implements OnInit {
 
   loading: boolean;
   outings: OutingView[];
-  teams: Team[];
+  teams: TeamView[];
 
   constructor(
     private outingService: OutingService,
     private teamService: TeamService,
   ) {
     this.loading = true;
-    this.teamService.loadTeam(2);
   }
 
   ngOnInit(): void {
@@ -26,12 +40,23 @@ export class HomePage implements OnInit {
           this.outings = Array.from([currentOuting]);
           this.loading = false;
 
-          this.teams = Array.from([
-            this.teamService.getTeam()
-          ]);
+          this.teamService.getTeams()
+            .subscribe(
+              (teams) => {
+                this.teams = [];
+                from(teams).subscribe(
+                  (team) => this.teams.push(new TeamView(team))
+                );
+              }
+            );
+
         }
       );
 
+  }
+
+  toggleExpansion(team: TeamView): void {
+    team.expanded = !team.expanded;
   }
 
 }
