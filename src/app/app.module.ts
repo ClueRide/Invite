@@ -9,6 +9,7 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {OutingService, ComponentsModule} from "front-end-common";
+import {InviteComponentsModule} from "../components/components.module";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {OutingService, ComponentsModule} from "front-end-common";
   imports: [
     BrowserModule,
     ComponentsModule.forRoot(),
+    InviteComponentsModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
