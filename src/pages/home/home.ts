@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OutingService, OutingView, Team, TeamService} from 'front-end-common';
 import {from} from "rxjs/observable/from";
+import {ModalController} from "ionic-angular";
 
 export class TeamView extends Team {
 
@@ -29,6 +30,7 @@ export class HomePage implements OnInit {
   constructor(
     private outingService: OutingService,
     private teamService: TeamService,
+    private modalController: ModalController,
   ) {
     this.loading = true;
   }
@@ -57,6 +59,15 @@ export class HomePage implements OnInit {
 
   toggleExpansion(team: TeamView): void {
     team.expanded = !team.expanded;
+  }
+
+  addTeam(): void {
+    this.modalController.create(
+      'NewTeamModalPage'
+    ).present()
+      .catch(
+        (err) => console.error("Failure in presenting New Team Modal", err)
+      );
   }
 
 }
