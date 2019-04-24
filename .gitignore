@@ -13,6 +13,9 @@ log.txt
 npm-debug.log*
 
 .idea/
+*.iml
+*.ipr
+*.iws
 .sourcemaps/
 .sass-cache/
 .tmp/

@@ -1,0 +1,36 @@
+<ion-card>
+  <ion-card-content>
+    <form [formGroup]="teamNameForm"
+          (ngSubmit)="submitForm()">
+      <ion-list>
+
+        <div class="form-group">
+          <ion-item>
+            <ion-label color="primary" stacked>Team Name</ion-label>
+            <ion-input type="text"
+                       formControlName="teamName"
+                       placeholder="Team Name">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <p></p>
+
+        <ion-buttons>
+          <button type="submit"
+                  ion-button
+                  [disabled]="!teamNameForm.valid">
+            Save
+          </button>
+
+          <button type="reset"
+                  ion-button>
+            Cancel
+          </button>
+
+        </ion-buttons>
+
+      </ion-list>
+    </form>
+  </ion-card-content>
+</ion-card>
