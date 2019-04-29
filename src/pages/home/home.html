@@ -9,46 +9,73 @@
 
 <ion-content padding>
 
+  <ng-container *ngIf="busy; then loading else ready">
+  </ng-container>
+
+  <ng-template #loading>
+    <loader></loader>
+  </ng-template>
+
+  <ng-template #ready>
+
     <div *ngIf="teams && teams.length > 0">
       <ion-list>
+        <ion-item-sliding #teamSlider
+                          *ngFor="let team of teams">
 
-          <button ion-item
-                  *ngFor="let team of teams"
-                  (click)="toggleExpansion(team)">
-              {{team.name}} has {{team.members.length}} members
-            <expanded-team [expanded]="team.expanded"
-                           [expandHeight]="46 * team.members.length">
-              <ion-list>
-                <button ion-item *ngFor="let member of team.members">
-                  {{member.displayName}}
-                </button>
-              </ion-list>
-            </expanded-team>
-          </button>
+          <ion-item>
+            <expandable-team [team]="team" *ngIf="team.members.length > 0">
+            </expandable-team>
+            <team-button [team]="team" *ngIf="team.members.length == 0">
+            </team-button>
+          </ion-item>
+
+          <ion-item-options side="left">
+            <button ion-button color="primary">
+              <ion-icon name="mail"></ion-icon>
+              Invite
+            </button>
+          </ion-item-options>
+
+          <ion-item-options side="right">
+            <button ion-button color="danger">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+            <button ion-button
+                    (click)="editTeam(team.id, teamSlider)"
+                    color="primary">
+              <ion-icon name="create"></ion-icon>
+              Edit Members
+            </button>
+          </ion-item-options>
+
+        </ion-item-sliding>
 
       </ion-list>
 
     </div>
 
-  <button ion-button (click)="addTeam()">
-    Add New
-  </button>
+    <button ion-button (click)="addTeam()">
+      Add New Team
+    </button>
 
+  </ng-template>
 
-  <ion-card>
-    <ion-card-title>Upcoming Outings</ion-card-title>
-    <ion-card-content>
-      <ion-list>
-        <button ion-item *ngFor="let outing of outings" (click)="itemTapped($event, outing)">
-          <div>
-            {{outing.scheduledTime | date}}
-          </div>
-          <div>
-            {{outing.courseName}}
-          </div>
-        </button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <!--<ion-card>-->
+    <!--<ion-card-title>Upcoming Outings</ion-card-title>-->
+    <!--<ion-card-content>-->
+      <!--<ion-list>-->
+        <!--<button ion-item *ngFor="let outing of outings" (click)="itemTapped($event, outing)">-->
+          <!--<div>-->
+            <!--{{outing.scheduledTime | date}}-->
+          <!--</div>-->
+          <!--<div>-->
+            <!--{{outing.courseName}}-->
+          <!--</div>-->
+        <!--</button>-->
+      <!--</ion-list>-->
+    <!--</ion-card-content>-->
+  <!--</ion-card>-->
 
 </ion-content>

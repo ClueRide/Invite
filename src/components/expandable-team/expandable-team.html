@@ -1,0 +1,27 @@
+<!-- Clickable portion of the component -->
+<button ion-item (click)="toggleExpansion(team)">
+
+  <ion-label>{{team.name}}</ion-label>
+
+  <ion-icon item-end *ngIf="team.members.length > 0 && team.expanded" name="arrow-up"></ion-icon>
+  <ion-icon item-end *ngIf="team.members.length > 0 && !team.expanded" name="arrow-down"></ion-icon>
+
+  <ion-note item-end>{{team.members.length}} members</ion-note>
+
+</button>
+
+<!-- Portion that expands when clicked -->
+<expanded-team *ngIf="team.members.length > 0"
+               [expanded]="team.expanded"
+               [expandHeight]="63 * (team.members.length)">
+  <ion-list>
+    <button ion-item
+            (click)="toggleExpansion(team)"
+            *ngFor="let member of team.members">
+      <member-chip [member]="member">
+      </member-chip>
+    </button>
+  </ion-list>
+
+</expanded-team>
+
