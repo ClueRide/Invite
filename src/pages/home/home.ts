@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {OutingService, OutingView, Team, TeamService} from 'front-end-common';
 import {from} from "rxjs/observable/from";
-import {ModalController} from "ionic-angular";
+import {ItemSliding, ModalController, NavController} from "ionic-angular";
+import {TeamEditPage} from "../team-edit/team-edit";
 
 export class TeamView extends Team {
 
@@ -23,7 +24,7 @@ export class TeamView extends Team {
 })
 export class HomePage implements OnInit {
 
-  loading: boolean;
+  busy: boolean;
   outings: OutingView[];
   teams: TeamView[];
 
@@ -31,8 +32,9 @@ export class HomePage implements OnInit {
     private outingService: OutingService,
     private teamService: TeamService,
     private modalController: ModalController,
+    private navCtrl: NavController,
   ) {
-    this.loading = true;
+    this.busy = true;
   }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class HomePage implements OnInit {
       .subscribe(
         (currentOuting: OutingView) => {
           this.outings = Array.from([currentOuting]);
-          this.loading = false;
+          this.busy = false;
 
           this.teamService.getTeams()
             .subscribe(
@@ -57,10 +59,6 @@ export class HomePage implements OnInit {
 
   }
 
-  toggleExpansion(team: TeamView): void {
-    team.expanded = !team.expanded;
-  }
-
   addTeam(): void {
     this.modalController.create(
       'NewTeamModalPage'
@@ -68,6 +66,20 @@ export class HomePage implements OnInit {
       .catch(
         (err) => console.error("Failure in presenting New Team Modal", err)
       );
+  }
+
+  editTeam(
+    id: number,
+    teamSlider: ItemSliding
+  ): void {
+    teamSlider.close();
+    this.navCtrl.push(
+      TeamEditPage,
+      {
+        teamId: id
+      }
+    ).catch((reason: any) => console.error('Unable to open Team Edit page', reason)
+    );
   }
 
 }
